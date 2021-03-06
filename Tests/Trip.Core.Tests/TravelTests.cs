@@ -1,6 +1,7 @@
 using System;
 using Trip.Core.Aggregates.TripAggregate;
 using Trip.Core.Aggregates.UserAggregate;
+using Trip.Core.Exceptions;
 using Xunit;
 
 namespace Trip.Core.Tests
@@ -19,6 +20,17 @@ namespace Trip.Core.Tests
 
             //assert
             Assert.Equal(customer, travel.Customer);
+        }
+
+        [Fact]
+        public void Assigning_Customer_SHould_Throw_Exception()
+        {
+            //arrange
+            Travel travel = new Travel("Lodz");
+            Customer customer = null;
+
+            //act and assert
+            Assert.Throws<TravelException>(() => travel.AssignCustomer(customer));
         }
     }
 }
