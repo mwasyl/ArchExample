@@ -10,6 +10,11 @@ namespace Trip.Core.Aggregates.TripAggregate
             Id = Guid.NewGuid();
         }
 
+        public static TravelId FromGuid(Guid id)
+        {
+            return new TravelId() { Id = id };
+        }
+
         public Guid Id { get; private set; }
     }
 }

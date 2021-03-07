@@ -32,5 +32,19 @@ namespace Trip.Core.Tests
             //act and assert
             Assert.Throws<TravelException>(() => travel.AssignCustomer(customer));
         }
+
+        [Fact]
+        public void Travel_Should_Be_Cancelled()
+        {
+            //arrange
+            Travel travel = new Travel("Lodz");
+            Customer customer = new Customer("John", "Smith");
+
+            //act
+            travel.Cancel();
+
+            //assert
+            Assert.True(travel.IsCancel);
+        }
     }
 }

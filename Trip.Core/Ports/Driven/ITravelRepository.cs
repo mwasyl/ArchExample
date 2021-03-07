@@ -6,7 +6,7 @@ namespace Trip.Core.Ports.Driven
 {
     public interface ITravelRepository
     {
-        Task<IEnumerable<Travel>> Get();
+        Task<IReadOnlyCollection<Travel>> Get();
         Task<Travel> Get(TravelId id);
         void Save(Travel travel);
     }
