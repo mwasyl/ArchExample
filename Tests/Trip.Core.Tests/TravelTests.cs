@@ -23,7 +23,7 @@ namespace Trip.Core.Tests
         }
 
         [Fact]
-        public void Assigning_Customer_SHould_Throw_Exception()
+        public void Assigning_Customer_Should_Throw_Exception()
         {
             //arrange
             Travel travel = new Travel("Lodz");
@@ -31,6 +31,20 @@ namespace Trip.Core.Tests
 
             //act and assert
             Assert.Throws<TravelException>(() => travel.AssignCustomer(customer));
+        }
+
+        [Fact]
+        public void Travel_Should_Be_Editted()
+        {
+            //arrange
+            Travel travel = new Travel("Lodz");
+            Travel travelEdited = new Travel("Warsaw");
+
+            //act
+            travel.Edit(travelEdited);
+
+            //assert
+            Assert.Equal("Warsaw", travel.Destination);
         }
 
         [Fact]
