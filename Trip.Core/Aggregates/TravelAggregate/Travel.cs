@@ -43,6 +43,12 @@ namespace Trip.Core.Aggregates.TripAggregate
             };
         }
 
+        public static Travel FromDto(TravelDto travelDto)
+        {
+            return new Travel(travelDto.Destination);
+        }
+
+
         public void Edit(Travel editedTravel)
         {
             Destination = editedTravel.Destination;

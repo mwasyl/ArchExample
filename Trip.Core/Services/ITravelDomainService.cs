@@ -9,7 +9,8 @@ namespace Trip.Core.Services
     public interface ITravelDomainService
     {
         Task<IReadOnlyCollection<Travel>> GetTravels();
-        void CreateTravel(Travel travel);
+        Task<Travel> GetTravel(TravelId travel);
+        Task CreateTravel(Travel travel);
         void EditTravel(Guid travelId, Travel editedTravel);
         void AssignCustomer(Travel travel, Customer customer);
         void Cancel(Travel travel);

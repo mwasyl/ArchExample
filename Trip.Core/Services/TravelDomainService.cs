@@ -17,9 +17,10 @@ namespace Trip.Core.Services
             _travelRepository = travelRepository;
         }
 
-        public void CreateTravel(Travel travel)
+        public Task CreateTravel(Travel travel)
         {
             _travelRepository.Save(travel);
+            return Task.CompletedTask;
         }
 
         public void AssignCustomer(Travel travel, Customer customer)
@@ -49,6 +50,11 @@ namespace Trip.Core.Services
             Travel travel = _travelRepository.Get(TravelId.FromGuid(travelId)).GetAwaiter().GetResult();
             travel.Edit(editedTravel);
             _travelRepository.Save(travel);
+        }
+
+        public Task<Travel> GetTravel(TravelId travelId)
+        {
+            return _travelRepository.Get(travelId);
         }
     }
 }
