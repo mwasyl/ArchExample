@@ -1,0 +1,9 @@
+<div *ngIf="trip">
+  <h2>{{trip.destination | uppercase}} Details</h2>
+  <div><span>id: </span>{{trip.id}}</div>
+  <div>
+    <label for="trip-destination">Trip destination: </label>
+    <input id="trip-destination" [(ngModel)]="trip.destination" placeholder="destination">
+  </div>
+  <button (click)="goBack()">go back</button>
+</div>

@@ -1,4 +1,5 @@
-﻿using Trip.Core.Aggregates.UserAggregate;
+﻿using System;
+using Trip.Core.Aggregates.UserAggregate;
 using Trip.Core.Common;
 using Trip.Core.Dtos;
 using Trip.Core.Exceptions;
@@ -7,6 +8,14 @@ namespace Trip.Core.Aggregates.TripAggregate
 {
     public class Travel : Entity<TravelId>
     {
+        //temporary
+        public Travel(TravelId id, string destination)
+        {
+            Id = id;
+            Destination = destination;
+            IsCancel = false;
+        }
+
         public Travel(string destination)
         {
             Id = new TravelId();

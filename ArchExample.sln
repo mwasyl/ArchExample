@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6C098234
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trip.Core.Tests", "Tests\Trip.Core.Tests\Trip.Core.Tests.csproj", "{AF6920D0-EF08-4B9D-8423-D304B7A7E597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trip.InMemoryDataAccess", "Adapters\Driven\Trip.InMemoryDataAccess\Trip.InMemoryDataAccess.csproj", "{BC173111-D66B-4B0E-88FA-2B1B790EFFAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trip.InMemoryDataAccess", "Adapters\Driven\Trip.InMemoryDataAccess\Trip.InMemoryDataAccess.csproj", "{BC173111-D66B-4B0E-88FA-2B1B790EFFAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

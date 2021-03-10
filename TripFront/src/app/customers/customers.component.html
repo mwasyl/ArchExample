@@ -1,0 +1,23 @@
+<div class="customers-component">
+<ul class="customers">
+    <li *ngFor="let customer of customers" 
+        (click)="onSelect(customer)" 
+        [class.selected]="customer === selectedCustomer">
+      <span class="badge">{{customer.id}}</span> {{customer.firstName}} {{customer.surName}}
+    </li>
+  </ul>
+
+  <div *ngIf="selectedCustomer">
+
+  <h2>{{selectedCustomer.destination | uppercase}} Details</h2>
+  <div><span>id: </span>{{selectedCustomer.id}}</div>
+  <div>
+    <label for="customer-firstName">Customer: </label>
+    <input id="customer-firstName" [(ngModel)]="selectedCustomer.firstName" placeholder="firstName">
+  </div>
+  <div>
+    <label for="customer-surName">Customer: </label>
+    <input id="customer-surName" [(ngModel)]="selectedCustomer.surName" placeholder="surName">
+  </div>
+</div>
+</div>

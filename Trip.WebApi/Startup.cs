@@ -2,17 +2,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Trip.Core.Ports.Driven;
 using Trip.Core.Services;
 using Trip.InMemoryDataAccess;
@@ -27,6 +20,9 @@ namespace Trip.WebApi
 
         }
 
+
+        readonly string AllowPolicyName = "ForTestOnlyAllowAny";
+
         public IConfiguration Configuration { get; set; }
 
         public ILifetimeScope AutofacContainer { get; private set; }
@@ -35,6 +31,14 @@ namespace Trip.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: not to use on production,
+            //this is policy to use for tests now
+            services.AddCors(o => o.AddPolicy(AllowPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddOptions();
 
@@ -87,6 +91,9 @@ namespace Trip.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+
+            app.UseCors(AllowPolicyName);
 
             app.UseAuthorization();
 

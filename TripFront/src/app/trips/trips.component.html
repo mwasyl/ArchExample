@@ -1,0 +1,9 @@
+<div class="trips-component">
+  <ul class="trips">
+    <li *ngFor="let trip of trips" >
+      <a routerLink="/detail/{{trip.id}}">
+        <span class="badge">{{trip.id}}</span> {{trip.destination}}
+      </a>
+    </li>
+  </ul>
+</div>

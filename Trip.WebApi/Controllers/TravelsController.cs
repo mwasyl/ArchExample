@@ -38,7 +38,7 @@ namespace Trip.WebApi.Controllers
         {
             try
             {
-                var travel = await _travelDomainService.GetTravel(TravelId.FromGuid(id));
+                var travel = await _travelDomainService.GetTravel(new TravelId(id));
                 if (travel == null)
                 {
                     return NotFound();
