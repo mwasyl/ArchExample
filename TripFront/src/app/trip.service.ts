@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class TripService {
 
-  private tripsUrl = 'https://localhost:44378/Travels';  // URL to web api
+  private tripsUrl = 'https://archexampletrip.azurewebsites.net/Travels';  // URL to web api
 
   constructor(
     private http: HttpClient) { }
@@ -21,7 +21,5 @@ export class TripService {
 
   getTrip(id: Guid): Observable<Trip> {
     return this.http.get<Trip>(this.tripsUrl+"/"+id)
-
-//    return of(TRIPS.find(trip => trip.id.toString() == id.toString()));
   }
 }

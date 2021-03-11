@@ -11,6 +11,16 @@ namespace Trip.Core.Aggregates.UserAggregate
             Id = Guid.NewGuid();
         }
 
+        public UserId(Guid id)
+        {
+            Id = id;
+        }
+
+        public static UserId FromGuid(Guid id)
+        {
+            return new UserId() { Id = id };
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;

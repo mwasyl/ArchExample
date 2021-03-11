@@ -59,8 +59,9 @@ namespace Trip.WebApi
             // Register your own things directly with Autofac here. Don't
             // call builder.Populate(), that happens in AutofacServiceProviderFactory
             // for you.
-            builder.RegisterType<TravelDomainService>().As<ITravelDomainService>();
+            builder.RegisterType<DomainTravelService>().As<IDomainTravelService>();
             builder.RegisterType<TravelInMemoryRepository>().As<ITravelRepository>();
+            builder.RegisterType<CustomerInMemoryRepository>().As<ICustomerRepository>();
 
             //builder.RegisterModule(new MyApplicationModule());
         }

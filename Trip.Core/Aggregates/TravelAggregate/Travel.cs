@@ -16,13 +16,6 @@ namespace Trip.Core.Aggregates.TripAggregate
             IsCancel = false;
         }
 
-        public Travel(string destination)
-        {
-            Id = new TravelId();
-            Destination = destination;
-            IsCancel = false;
-        }
-
         public string Destination { get; private set; }
         public Customer Customer { get; private set; }
         public bool IsCancel { get; private set; }
@@ -32,7 +25,10 @@ namespace Trip.Core.Aggregates.TripAggregate
             if (customer == null)
             {
                 throw new TravelException("Cannot assign Customer. It's null.");
-            } else
+            } else if (IsCancel)
+            {
+                throw new TravelException("Cannot assign Customer. The trip is cancelled.");
+            }
             {
                 Customer = customer;
             }
@@ -54,9 +50,12 @@ namespace Trip.Core.Aggregates.TripAggregate
 
         public static Travel FromDto(TravelDto travelDto)
         {
-            return new Travel(travelDto.Destination);
+            if (travelDto.Id == null)
+            {
+                travelDto.Id = Guid.NewGuid();
+            }
+            return new Travel(new TravelId(travelDto.Id.Value), travelDto.Destination);
         }
-
 
         public void Edit(Travel editedTravel)
         {

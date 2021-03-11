@@ -12,6 +12,13 @@ namespace Trip.Core.Aggregates.UserAggregate
             Id = new UserId();
         }
 
+        public User(UserId userId, string firstName, string surName)
+        {
+            FirstName = firstName;
+            SurName = surName;
+            Id = userId;
+        }
+
         public string FirstName { get; private set; }
         public string SurName { get; private set; }
 

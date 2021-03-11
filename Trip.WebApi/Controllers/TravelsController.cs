@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Trip.Core.Aggregates.TripAggregate;
+using Trip.Core.Aggregates.UserAggregate;
 using Trip.Core.Dtos;
+using Trip.Core.Exceptions;
 using Trip.Core.Services;
 
 namespace Trip.WebApi.Controllers
@@ -15,9 +17,9 @@ namespace Trip.WebApi.Controllers
     public class TravelsController : ControllerBase
     {
         private readonly ILogger<TravelsController> _logger;
-        private ITravelDomainService _travelDomainService;
+        private IDomainTravelService _travelDomainService;
         
-        public TravelsController(ILogger<TravelsController> logger, ITravelDomainService travelDomainService)
+        public TravelsController(ILogger<TravelsController> logger, IDomainTravelService travelDomainService)
         {
             _logger = logger;
             _travelDomainService = travelDomainService;
@@ -46,6 +48,7 @@ namespace Trip.WebApi.Controllers
                 return travel.ToDto();
             } catch (Exception ex)
             {
+                _logger.LogError($"Error while gathering travel: {id}", ex);
                 throw;
             }
         }
@@ -58,15 +61,46 @@ namespace Trip.WebApi.Controllers
             return CreatedAtAction("Get", new { id = travel.Id }, travel);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<TravelDto>> Put(TravelDto travelDto)
+        [HttpPatch]
+        [Route("assign-customer")]
+        public async Task<ActionResult> AssignCustomer(TravelDto travelDto)
         {
             try
             {
-                _travelDomainService.EditTravel(travelDto.Id, Travel.FromDto(travelDto));
-                return NoContent();
+                if (travelDto.Id.HasValue && travelDto.CustomerId.HasValue)
+                {
+                    _travelDomainService.AssignCustomer(new TravelId(travelDto.Id.Value), new UserId(travelDto.CustomerId.Value));
+                    return NoContent();
+                } else
+                {
+                    throw new TravelException("No travel id or customer id.");
+                }
             } catch(Exception ex)
             {
+                _logger.LogError($"Error while assigning customer to travel: {travelDto.Id}", ex);
+                throw;
+            }
+        }
+
+        [HttpPatch]
+        [Route("cancel")]
+        public async Task<ActionResult> Cancel(TravelDto travelDto)
+        {
+            try
+            {
+                if (travelDto.Id.HasValue)
+                {
+                    _travelDomainService.Cancel(new TravelId(travelDto.Id.Value));
+                    return NoContent();
+                }
+                else
+                {
+                    throw new TravelException("No travel id");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while cancelling a travel: {travelDto.Id}", ex);
                 throw;
             }
         }

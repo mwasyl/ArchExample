@@ -8,13 +8,17 @@ using System;
 
 namespace Trip.Core.Services
 {
-    public class TravelDomainService : ITravelDomainService
+    public class DomainTravelService : IDomainTravelService
     {
         private ITravelRepository _travelRepository;
+        private ICustomerRepository _customerRepository;
 
-        public TravelDomainService(ITravelRepository travelRepository)
+
+        public DomainTravelService(ITravelRepository travelRepository, 
+            ICustomerRepository customerRepository)
         {
             _travelRepository = travelRepository;
+            _customerRepository = customerRepository;
         }
 
         public Task CreateTravel(Travel travel)
@@ -23,25 +27,14 @@ namespace Trip.Core.Services
             return Task.CompletedTask;
         }
 
-        public void AssignCustomer(Travel travel, Customer customer)
-        {
-            if (travel == null)
-            {
-                throw new TravelException("Cannot assign Customer. Travel is null");
-            }
-            else
-            {
-                travel.AssignCustomer(customer);
-            }
-        }
-
         public async Task<IReadOnlyCollection<Travel>> GetTravels()
         {
             return await _travelRepository.Get();
         }
 
-        public void Cancel(Travel travel)
+        public async void Cancel(TravelId travelId)
         {
+            var travel = await _travelRepository.Get(travelId);
             travel.Cancel();
         }
 
@@ -55,6 +48,21 @@ namespace Trip.Core.Services
         public Task<Travel> GetTravel(TravelId travelId)
         {
             return _travelRepository.Get(travelId);
+        }
+
+        public async void AssignCustomer(TravelId travelId, UserId customerId)
+        {
+            var travel = await _travelRepository.Get(travelId);
+            var customer = await _customerRepository.Get(customerId);
+            
+            if (travel == null)
+            {
+                throw new TravelException("Cannot assign Customer. Travel is null");
+            }
+            else
+            {
+                travel.AssignCustomer(customer);
+            }
         }
     }
 }
