@@ -13,8 +13,8 @@ export class CustomerService {
   //https://localhost:44378/
 
   //This setting should be in config:
-  private customersWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/customers';
-  //private customersWebApiUrl = 'https://localhost:44378/api/customers';
+  //private customersWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/customers';
+  private customersWebApiUrl = 'https://localhost:44378/api/customers';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

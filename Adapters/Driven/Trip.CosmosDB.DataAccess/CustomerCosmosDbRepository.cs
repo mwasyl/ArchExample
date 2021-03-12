@@ -31,7 +31,7 @@ namespace Trip.CosmosDB.DataAccess
         {
             try
             {
-                ItemResponse<CustomerDal> response = await this._container.ReadItemAsync<CustomerDal>(id.Id.ToString(), new PartitionKey(id.Id.ToString()));
+                ItemResponse<CustomerDal> response = await this._container.ReadItemAsync<CustomerDal>(id.ToString(), new PartitionKey(id.ToString()));
                 var customerDal = response.Resource;
                 return CustomerModelMapper.FromDalModel(customerDal);
             }

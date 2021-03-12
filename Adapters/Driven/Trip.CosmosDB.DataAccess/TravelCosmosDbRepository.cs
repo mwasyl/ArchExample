@@ -44,7 +44,7 @@ namespace Trip.CosmosDB.DataAccess
         {
             try
             {
-                ItemResponse<TravelDal> response = await this._container.ReadItemAsync<TravelDal>(id.Id.ToString(), new PartitionKey(id.Id.ToString()));
+                ItemResponse<TravelDal> response = await this._container.ReadItemAsync<TravelDal>(id.ToString(), new PartitionKey(id.ToString()));
                 var travelDal = response.Resource;
                 return TravelModelMapper.FromDalModel(travelDal);
             }

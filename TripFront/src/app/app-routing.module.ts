@@ -6,9 +6,7 @@ import { TripDetailComponent } from './trip-detail/trip-detail.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/trips', pathMatch: 'full' },
   { path: 'trips', component: TripsComponent },
-  { path: 'detail/:id', component: TripDetailComponent },
   { path: 'customers', component: CustomersComponent }
 ];
 

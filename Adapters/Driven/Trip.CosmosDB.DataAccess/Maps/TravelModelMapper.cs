@@ -24,7 +24,7 @@ namespace Trip.CosmosDB.DataAccess.Maps
         {
             var travelDal = new TravelDal()
             {
-                Id = travel.Id.Id.ToString(),
+                Id = travel.Id.ToString(),
                 Destination = travel.Destination,
                 IsCancel = travel.IsCancel,
                 Customers = new List<CustomerDal>()
@@ -36,7 +36,7 @@ namespace Trip.CosmosDB.DataAccess.Maps
                 {
                     travelDal.Customers.Add(new CustomerDal()
                     {
-                        Id = customer.Id.Id.ToString(),
+                        Id = customer.Id.ToString(),
                         FirstName = customer.FirstName,
                         SurName = customer.SurName
                     });

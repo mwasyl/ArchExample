@@ -13,7 +13,7 @@ namespace Trip.CosmosDB.DataAccess.Maps
         {
             return new CustomerDal()
             {
-                Id = customer.Id.Id.ToString(),
+                Id = customer.Id.ToString(),
                 FirstName = customer.FirstName,
                 SurName = customer.SurName
             };

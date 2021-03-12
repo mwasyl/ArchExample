@@ -11,8 +11,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class TripService {
 
   //This setting should be in config:
-  private tripsWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/travels';
-  //private tripsWebApiUrl = 'https://localhost:44378/api/travels';
+  //private tripsWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/travels';
+  private tripsWebApiUrl = 'https://localhost:44378/api/travels';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
