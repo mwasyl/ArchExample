@@ -32,5 +32,10 @@ namespace Trip.Core.Aggregates.TripAggregate
         }
 
         public Guid Id { get; private set; }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }

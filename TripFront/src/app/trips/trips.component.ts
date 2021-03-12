@@ -29,22 +29,24 @@ export class TripsComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.selectedTrip.id === null)
+
+    if (this.validate(this.selectedTrip) === true)
     {
-      this.tripService.createTrip(this.selectedTrip)
-      .subscribe(() => 
-      { 
-        console.log('done'); 
-        this.message = "Trip succesfully created."; 
-        this.trips.push(this.selectedTrip);
-      });
-    } else {
-      this.tripService.saveTrip(this.selectedTrip)
-      .subscribe(() => 
-      { 
-        console.log('done'); 
-        this.message = "Trip succesfully updated."; 
-      });
+      if (this.selectedTrip.id === null)
+      {
+        this.tripService.createTrip(this.selectedTrip)
+        .subscribe(() => 
+        { 
+          this.message = "Trip succesfully created."; 
+          this.trips.push(this.selectedTrip);
+        });
+      } else {
+        this.tripService.saveTrip(this.selectedTrip)
+        .subscribe(() => 
+        {
+          this.message = "Trip succesfully updated."; 
+        });
+      }
     }
   }
 
@@ -54,6 +56,16 @@ export class TripsComponent implements OnInit {
       destination: null
     };
     this.selectedTrip = trip;
+  }
+
+  validate(trip: Trip): boolean {
+    if(!trip.destination || 0 === trip.destination.length)
+    {
+      this.message = "Trip destination is required."; 
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }
