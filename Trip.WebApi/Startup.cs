@@ -60,6 +60,7 @@ namespace Trip.WebApi
             // call builder.Populate(), that happens in AutofacServiceProviderFactory
             // for you.
             builder.RegisterType<DomainTravelService>().As<IDomainTravelService>();
+            builder.RegisterType<DomainCustomerService>().As<IDomainCustomerService>();
             builder.RegisterType<TravelInMemoryRepository>().As<ITravelRepository>();
             builder.RegisterType<CustomerInMemoryRepository>().As<ICustomerRepository>();
 

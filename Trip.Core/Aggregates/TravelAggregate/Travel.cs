@@ -31,6 +31,7 @@ namespace Trip.Core.Aggregates.TripAggregate
             }
             {
                 Customer = customer;
+                Customer.AssignToTravel(this);
             }
         }
 

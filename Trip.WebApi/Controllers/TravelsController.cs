@@ -25,6 +25,7 @@ namespace Trip.WebApi.Controllers
             _travelDomainService = travelDomainService;
         }
 
+        //Get all
         [HttpGet]
         public async Task<IEnumerable<TravelDto>> Get()
         {
@@ -34,6 +35,7 @@ namespace Trip.WebApi.Controllers
             return travelDtos;
         }
 
+        //Get by id
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<TravelDto>> Get(Guid id)
@@ -53,6 +55,7 @@ namespace Trip.WebApi.Controllers
             }
         }
 
+        //Create
         [HttpPost]
         public async Task<ActionResult<TravelDto>> Post(TravelDto travelDto)
         {
@@ -61,6 +64,19 @@ namespace Trip.WebApi.Controllers
             return CreatedAtAction("Get", new { id = travel.Id }, travel);
         }
 
+        //Edit
+        [HttpPatch]
+        public async Task<ActionResult<TravelDto>> Patch(TravelDto travelDto)
+        {
+            if (!travelDto.Id.HasValue)
+            {
+                return NotFound();
+            }
+            _travelDomainService.EditTravel(travelDto.Id.Value, Travel.FromDto(travelDto));
+            return CreatedAtAction("Patch", new { id = travelDto.Id }, travelDto);
+        }
+
+        //assign customer
         [HttpPatch]
         [Route("assign-customer")]
         public async Task<ActionResult> AssignCustomer(TravelDto travelDto)
@@ -82,6 +98,7 @@ namespace Trip.WebApi.Controllers
             }
         }
 
+        //cancel
         [HttpPatch]
         [Route("cancel")]
         public async Task<ActionResult> Cancel(TravelDto travelDto)

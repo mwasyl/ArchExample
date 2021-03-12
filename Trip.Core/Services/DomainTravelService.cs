@@ -13,7 +13,6 @@ namespace Trip.Core.Services
         private ITravelRepository _travelRepository;
         private ICustomerRepository _customerRepository;
 
-
         public DomainTravelService(ITravelRepository travelRepository, 
             ICustomerRepository customerRepository)
         {
