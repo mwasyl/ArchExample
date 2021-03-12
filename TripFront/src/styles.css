@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+.entity-item {
+    cursor: pointer;
+  }
+
+  .entity-item:hover {
+    color: #2c3a41;
+    background-color: #e6e6e6;
+    left: .1em;
+  }
+  .entity-item.selected {
+    background-color: darkgrey;
+    color: white;
+  }
+  .entity-item.selected:hover {
+    background-color: #505050;
+    color: white;
+  }
+  .entity-item.selected:active {
+    background-color: black;
+    color: white;
+  }
+  
+  input {
+    padding: .5rem;
+  }
+
+.list-edit-container
+{
+  display: flex;
+  flex-direction: row;
+}
+
+.entitys-list {
+  width: 30%;
+}
+
+.entity-edit-box {
+  width: 70%;
+  padding-left: 3em;
+  padding-right: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.entity-edit-box h4 {
+  margin-bottom: 1em;
+}
+
+.saveButton {
+  margin-top: 2em;
+}
+
+.message {
+  margin-top: 2em;
+}
