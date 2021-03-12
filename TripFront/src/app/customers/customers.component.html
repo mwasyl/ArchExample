@@ -3,23 +3,23 @@
   <h4>Customers list</h4>
 
   <div class="list-edit-container">
-    <div class="customers-list">
-      <div class="list-group customers">
+    <div class="entitys-list">
+      <div class="list-group entitys">
         <div *ngFor="let customer of customers" 
               (click)="onSelect(customer)" 
               [class.selected]="customer === selectedCustomer"
-              class="customer-item list-group-item list-group-item-action">
+              class="entity-item list-group-item list-group-item-action">
             {{customer.firstName}} {{customer.surName}}
         </div>
         <div (click)="onCreateCustomer()"
-              class="customer-item list-group-item list-group-item-action">
+              class="entity-item list-group-item list-group-item-action">
             Create new customer
         </div>        
        </div>
     </div>
 
-    <div class="customer-edit-box">
-      <div class="customers-details" *ngIf="selectedCustomer">
+    <div class="entity-edit-box bg-light">
+      <div class="entity-details" *ngIf="selectedCustomer">
         <h4>{{selectedCustomer.firstName}} {{ selectedCustomer.surName }} Details</h4>
     
         <div class="row g-3 align-items-center">

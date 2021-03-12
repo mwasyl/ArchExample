@@ -11,9 +11,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class CustomerService {
 
   //https://localhost:44378/
-  //private customersWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/customers';
-  private customersWebApiUrl = 'https://localhost:44378/api/customers';
 
+  //This setting should be in config:
+  private customersWebApiUrl = 'https://archexampletrip.azurewebsites.net/api/customers';
+  //private customersWebApiUrl = 'https://localhost:44378/api/customers';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

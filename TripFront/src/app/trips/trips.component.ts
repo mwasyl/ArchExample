@@ -9,6 +9,8 @@ import { TripService } from '../trip.service';
 })
 export class TripsComponent implements OnInit {
   trips: Trip[] = [];
+  selectedTrip?: Trip;
+  message: string;
 
   constructor(private tripService: TripService) {}
 
@@ -17,8 +19,41 @@ export class TripsComponent implements OnInit {
         .subscribe(trips => this.trips = trips);
   }
 
+  onSelect(trip: Trip): void {
+    this.selectedTrip = trip;
+    this.message = null;
+  }
+
   ngOnInit(): void {
     this.getTrips();
+  }
+
+  onSave(): void {
+    if (this.selectedTrip.id === null)
+    {
+      this.tripService.createTrip(this.selectedTrip)
+      .subscribe(() => 
+      { 
+        console.log('done'); 
+        this.message = "Trip succesfully created."; 
+        this.trips.push(this.selectedTrip);
+      });
+    } else {
+      this.tripService.saveTrip(this.selectedTrip)
+      .subscribe(() => 
+      { 
+        console.log('done'); 
+        this.message = "Trip succesfully updated."; 
+      });
+    }
+  }
+
+  onCreateTrip(): void {
+    let trip: Trip = {
+      id: null,
+      destination: null
+    };
+    this.selectedTrip = trip;
   }
 
 }

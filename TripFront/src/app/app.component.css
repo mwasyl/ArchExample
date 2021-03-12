@@ -1,9 +1,10 @@
 .container {
-  padding-bottom: 5em;
+  padding-bottom: 2em;
 }
 header {
   margin: 0 auto;
   text-align: center;
+  margin-top: 1em;
 }
 
 .demo-text {

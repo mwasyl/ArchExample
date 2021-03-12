@@ -2,10 +2,39 @@
 
  <h4>Travels list</h4>
 
-  <div class="list-group">
-    <a *ngFor="let trip of trips" routerLink="/detail/{{trip.id}}" class="list-group-item list-group-item-action">
-      {{trip.destination}}
-    </a>
-  </div>
+ <div class="list-edit-container">
+   <div class="entitys-list">
+     <div class="list-group entitys">
+       <div *ngFor="let trip of trips"
+             (click)="onSelect(trip)" 
+             [class.selected]="trip === selectedTrip"
+             class="entity-item list-group-item list-group-item-action">
+             {{trip.destination}}
+       </div>
+       <div (click)="onCreateTrip()"
+             class="entity-item list-group-item list-group-item-action">
+           Create new trip
+       </div>        
+      </div>
+   </div>
 
+   <div class="entity-edit-box bg-light">
+    <div class="entity-details" *ngIf="selectedTrip">
+      <h4>{{selectedTrip.destination}} Details</h4>
+  
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="trip-destination" class="col-form-label">Destination</label>
+        </div>
+        <div class="col-auto">
+          <input class="form-control" id="trip-destination" [(ngModel)]="selectedTrip.destination">
+        </div>
+      </div>
+
+      <button type="submit" (click)="onSave()" class="btn btn-primary saveButton">Save</button>
+    </div>
+    <div class="message" *ngIf="message">
+      <p>{{message}}</p>
+    </div>
+  </div>   
 </div>
