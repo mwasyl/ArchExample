@@ -20,36 +20,35 @@ namespace Trip.Core.Services
             _customerRepository = customerRepository;
         }
 
-        public Task CreateTravel(Travel travel)
-        {
-            _travelRepository.Save(travel);
-            return Task.CompletedTask;
-        }
-
         public async Task<IReadOnlyCollection<Travel>> GetTravels()
         {
             return await _travelRepository.Get();
         }
 
-        public async void Cancel(TravelId travelId)
+        public async Task<Travel> GetTravel(TravelId travelId)
+        {
+            return await _travelRepository.Get(travelId);
+        }
+
+        public async Task CreateTravel(Travel travel)
+        {
+            await _travelRepository.Create(travel);
+        }
+
+        public async Task EditTravel(Guid travelId, Travel editedTravel)
+        {
+            Travel travel = await _travelRepository.Get(TravelId.FromGuid(travelId));
+            travel.Edit(editedTravel);
+            await _travelRepository.Update(travel);
+        }
+
+        public async Task Cancel(TravelId travelId)
         {
             var travel = await _travelRepository.Get(travelId);
             travel.Cancel();
         }
 
-        public void EditTravel(Guid travelId, Travel editedTravel)
-        {
-            Travel travel = _travelRepository.Get(TravelId.FromGuid(travelId)).GetAwaiter().GetResult();
-            travel.Edit(editedTravel);
-            _travelRepository.Save(travel);
-        }
-
-        public Task<Travel> GetTravel(TravelId travelId)
-        {
-            return _travelRepository.Get(travelId);
-        }
-
-        public async void AssignCustomer(TravelId travelId, UserId customerId)
+        public async Task AssignCustomer(TravelId travelId, UserId customerId)
         {
             var travel = await _travelRepository.Get(travelId);
             var customer = await _customerRepository.Get(customerId);
@@ -61,6 +60,7 @@ namespace Trip.Core.Services
             else
             {
                 travel.AssignCustomer(customer);
+                await _travelRepository.Update(travel);
             }
         }
     }

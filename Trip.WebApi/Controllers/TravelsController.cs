@@ -72,7 +72,7 @@ namespace Trip.WebApi.Controllers
             {
                 return NotFound();
             }
-            _travelDomainService.EditTravel(travelDto.Id.Value, Travel.FromDto(travelDto));
+            await _travelDomainService.EditTravel(travelDto.Id.Value, Travel.FromDto(travelDto));
             return CreatedAtAction("Patch", new { id = travelDto.Id }, travelDto);
         }
 
@@ -85,7 +85,7 @@ namespace Trip.WebApi.Controllers
             {
                 if (travelDto.Id.HasValue && travelDto.CustomerId.HasValue)
                 {
-                    _travelDomainService.AssignCustomer(new TravelId(travelDto.Id.Value), new UserId(travelDto.CustomerId.Value));
+                    await _travelDomainService.AssignCustomer(new TravelId(travelDto.Id.Value), new UserId(travelDto.CustomerId.Value));
                     return NoContent();
                 } else
                 {
@@ -107,7 +107,7 @@ namespace Trip.WebApi.Controllers
             {
                 if (travelDto.Id.HasValue)
                 {
-                    _travelDomainService.Cancel(new TravelId(travelDto.Id.Value));
+                    await _travelDomainService.Cancel(new TravelId(travelDto.Id.Value));
                     return NoContent();
                 }
                 else

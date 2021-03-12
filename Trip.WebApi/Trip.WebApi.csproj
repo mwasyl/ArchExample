@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adapters\Driven\Trip.InMemoryDataAccess\Trip.InMemoryDataAccess.csproj" />
+    <ProjectReference Include="..\Adapters\Driven\Trip.CosmosDB.DataAccess\Trip.CosmosDB.DataAccess.csproj" />
     <ProjectReference Include="..\Trip.Core\Trip.Core.csproj" />
   </ItemGroup>
 

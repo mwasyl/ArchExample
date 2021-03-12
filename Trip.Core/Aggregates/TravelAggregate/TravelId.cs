@@ -21,6 +21,11 @@ namespace Trip.Core.Aggregates.TripAggregate
             return new TravelId() { Id = id };
         }
 
+        public static TravelId FromString(string id)
+        {
+            return new TravelId() { Id = Guid.Parse(id) };
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;

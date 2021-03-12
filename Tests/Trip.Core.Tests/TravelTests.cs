@@ -14,12 +14,16 @@ namespace Trip.Core.Tests
             //arrange
             Travel travel = new Travel(new TravelId(), "Lodz");
             Customer customer = new Customer("John", "Smith");
+            Customer customer2 = new Customer("John2", "Smith2");
 
             //act
             travel.AssignCustomer(customer);
+            travel.AssignCustomer(customer2);
+
 
             //assert
-            Assert.Equal(customer, travel.Customer);
+            Assert.Contains(customer, travel.Customers);
+            Assert.Contains(customer2, travel.Customers);
         }
 
         [Fact]

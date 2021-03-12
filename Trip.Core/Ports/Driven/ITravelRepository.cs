@@ -8,6 +8,7 @@ namespace Trip.Core.Ports.Driven
     {
         Task<IReadOnlyCollection<Travel>> Get();
         Task<Travel> Get(TravelId id);
-        void Save(Travel travel);
+        Task Create(Travel travel);
+        Task Update(Travel travel);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -71,7 +70,12 @@ namespace Trip.WebApi.Controllers
         {
             try
             {
-                _domainCustomerService.EditCustomer(customerDto.Id, Customer.FromDto(customerDto));
+                if (!customerDto.Id.HasValue)
+                {
+                    return NotFound();
+                }
+
+                await _domainCustomerService.EditCustomer(customerDto.Id.Value, Customer.FromDto(customerDto));
                 return NoContent();
             }
             catch (Exception ex)

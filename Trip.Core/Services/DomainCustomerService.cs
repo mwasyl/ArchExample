@@ -15,17 +15,16 @@ namespace Trip.Core.Services
             _customerRepository = customerRepository;
         }
 
-        public Task CreateCustomer(Customer customer)
+        public async Task CreateCustomer(Customer customer)
         {
-            _customerRepository.Save(customer);
-            return Task.CompletedTask;
+            await _customerRepository.Create(customer);
         }
 
-        public void EditCustomer(Guid customerId, Customer editedCustomer)
+        public async Task EditCustomer(Guid customerId, Customer editedCustomer)
         {
-            Customer customer = _customerRepository.Get(UserId.FromGuid(customerId)).GetAwaiter().GetResult();
+            Customer customer = await _customerRepository.Get(UserId.FromGuid(customerId));
             customer.Edit(editedCustomer);
-            _customerRepository.Save(customer);
+            await _customerRepository.Update(customer);
         }
 
         public Task<Customer> GetCustomer(UserId userId)

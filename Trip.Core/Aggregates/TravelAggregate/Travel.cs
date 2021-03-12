@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Trip.Core.Aggregates.UserAggregate;
 using Trip.Core.Common;
 using Trip.Core.Dtos;
@@ -14,10 +16,19 @@ namespace Trip.Core.Aggregates.TripAggregate
             Id = id;
             Destination = destination;
             IsCancel = false;
+            Customers = new List<Customer>();
+        }
+
+        public Travel(TravelId id, string destination, IReadOnlyCollection<Customer> customers)
+        {
+            Id = id;
+            Destination = destination;
+            IsCancel = false;
+            Customers = customers.ToList();
         }
 
         public string Destination { get; private set; }
-        public Customer Customer { get; private set; }
+        public List<Customer> Customers { get; private set; }
         public bool IsCancel { get; private set; }
 
         public void AssignCustomer(Customer customer)
@@ -25,14 +36,16 @@ namespace Trip.Core.Aggregates.TripAggregate
             if (customer == null)
             {
                 throw new TravelException("Cannot assign Customer. It's null.");
-            } else if (IsCancel)
+            }
+            else if (IsCancel)
             {
                 throw new TravelException("Cannot assign Customer. The trip is cancelled.");
             }
-            {
-                Customer = customer;
-                Customer.AssignToTravel(this);
-            }
+
+            if (Customers == null)
+                Customers = new List<Customer>();
+
+            Customers.Add(customer);
         }
 
         public void Cancel()

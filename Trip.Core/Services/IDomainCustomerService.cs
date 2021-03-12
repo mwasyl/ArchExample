@@ -10,6 +10,6 @@ namespace Trip.Core.Services
         Task<IReadOnlyCollection<Customer>> GetCustomers();
         Task<Customer> GetCustomer(UserId userId);
         Task CreateCustomer(Customer customer);
-        void EditCustomer(Guid customerId, Customer editedCustomer);
+        Task EditCustomer(Guid customerId, Customer editedCustomer);
     }
 }

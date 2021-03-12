@@ -6,9 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Threading.Tasks;
 using Trip.Core.Ports.Driven;
 using Trip.Core.Services;
-using Trip.InMemoryDataAccess;
+using Trip.CosmosDB.DataAccess;
 
 namespace Trip.WebApi
 {
@@ -31,6 +32,10 @@ namespace Trip.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddSingleton<ITravelRepository>(InitializeTravelCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+            services.AddSingleton<ICustomerRepository>(InitializeCustomerCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+
             //TODO: not to use on production,
             //this is policy to use for tests now
             services.AddCors(o => o.AddPolicy(AllowPolicyName, builder =>
@@ -61,10 +66,6 @@ namespace Trip.WebApi
             // for you.
             builder.RegisterType<DomainTravelService>().As<IDomainTravelService>();
             builder.RegisterType<DomainCustomerService>().As<IDomainCustomerService>();
-            builder.RegisterType<TravelInMemoryRepository>().As<ITravelRepository>();
-            builder.RegisterType<CustomerInMemoryRepository>().As<ICustomerRepository>();
-
-            //builder.RegisterModule(new MyApplicationModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,8 +104,34 @@ namespace Trip.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
 
+        private static async Task<TravelCosmosDbRepository> InitializeTravelCosmosClientInstanceAsync(IConfigurationSection configurationSection)
+        {
+            string databaseName = configurationSection.GetSection("DatabaseName").Value;
+            string containerName = configurationSection.GetSection("TravelsContainerName").Value;
+            string account = configurationSection.GetSection("Account").Value;
+            string key = configurationSection.GetSection("Key").Value;
+            Microsoft.Azure.Cosmos.CosmosClient client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+            TravelCosmosDbRepository cosmosDbService = new TravelCosmosDbRepository(client, databaseName, containerName);
+            Microsoft.Azure.Cosmos.DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
 
+            return cosmosDbService;
+        }
+
+        private static async Task<CustomerCosmosDbRepository> InitializeCustomerCosmosClientInstanceAsync(IConfigurationSection configurationSection)
+        {
+            string databaseName = configurationSection.GetSection("DatabaseName").Value;
+            string containerName = configurationSection.GetSection("CustomersContainerName").Value;
+            string account = configurationSection.GetSection("Account").Value;
+            string key = configurationSection.GetSection("Key").Value;
+            Microsoft.Azure.Cosmos.CosmosClient client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+            CustomerCosmosDbRepository cosmosDbService = new CustomerCosmosDbRepository(client, databaseName, containerName);
+            Microsoft.Azure.Cosmos.DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
+
+            return cosmosDbService;
         }
     }
 }

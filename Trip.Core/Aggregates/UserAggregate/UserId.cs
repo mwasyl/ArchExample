@@ -21,6 +21,11 @@ namespace Trip.Core.Aggregates.UserAggregate
             return new UserId() { Id = id };
         }
 
+        public static UserId FromString(string id)
+        {
+            return new UserId() { Id = Guid.Parse(id) };
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;
