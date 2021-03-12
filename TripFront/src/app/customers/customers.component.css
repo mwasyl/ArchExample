@@ -50,3 +50,15 @@
   padding-top: 0;
   padding-bottom: 1em;
 }
+
+.customer-edit-box h4 {
+  margin-bottom: 1em;
+}
+
+.saveButton {
+  margin-top: 2em;
+}
+
+.message {
+  margin-top: 2em;
+}
