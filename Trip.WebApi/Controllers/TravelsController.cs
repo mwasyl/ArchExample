@@ -13,7 +13,7 @@ using Trip.Core.Services;
 namespace Trip.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TravelsController : ControllerBase
     {
         private readonly ILogger<TravelsController> _logger;
