@@ -37,6 +37,14 @@ export class CustomerService {
       );
   }
 
+  createCustomer(customer: Customer): Observable<any> {
+    return this.http.post(this.customersWebApiUrl, customer, this.httpOptions)
+    .pipe(
+        tap(_ => console.log(`created customer id=${customer.id}`)),
+        catchError(this.handleError<any>('createCustomer'))
+      );
+  }  
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

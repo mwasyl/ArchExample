@@ -16,15 +16,36 @@ export class CustomersComponent implements OnInit {
 
   onSelect(customer: Customer): void {
     this.selectedCustomer = customer;
+    this.message = null;
+  }
+
+  onCreateCustomer(): void {
+    let customer: Customer = {
+      id: null,
+      firstName: "",
+      surName: ""
+    };
+    this.selectedCustomer = customer;
   }
 
   onSave(): void {
-    this.customerService.saveCustomer(this.selectedCustomer)
+    if (this.selectedCustomer.id === null)
+    {
+      this.customerService.createCustomer(this.selectedCustomer)
+      .subscribe(() => 
+      { 
+        console.log('done'); 
+        this.message = "Customer succesfully created."; 
+        this.customers.push(this.selectedCustomer);
+      });
+    } else {
+      this.customerService.saveCustomer(this.selectedCustomer)
       .subscribe(() => 
       { 
         console.log('done'); 
         this.message = "Customer succesfully updated."; 
       });
+    }
   }
 
   getCustomers(): void {

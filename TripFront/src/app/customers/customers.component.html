@@ -11,6 +11,10 @@
               class="customer-item list-group-item list-group-item-action">
             {{customer.firstName}} {{customer.surName}}
         </div>
+        <div (click)="onCreateCustomer()"
+              class="customer-item list-group-item list-group-item-action">
+            Create new customer
+        </div>        
        </div>
     </div>
 
@@ -38,7 +42,7 @@
     
         <button type="submit" (click)="onSave()" class="btn btn-primary saveButton">Save</button>
       </div>
-      <div class="message">
+      <div class="message" *ngIf="message">
         <p>{{message}}</p>
       </div>
     </div>
