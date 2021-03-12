@@ -12,8 +12,13 @@ export class CustomersComponent implements OnInit {
   customers = CUSTOMERS;
 
   selectedCustomer?: Customer;
+
   onSelect(customer: Customer): void {
     this.selectedCustomer = customer;
+  }
+
+  onSave(): void {
+    alert('test');
   }
 
   constructor() { }

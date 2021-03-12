@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class TripService {
 
-  private tripsUrl = 'https://archexampletrip.azurewebsites.net/Travels';  // URL to web api
+  private tripsUrl = 'https://archexampletrip.azurewebsites.net/api/Travels';  // URL to web api
 
   constructor(
     private http: HttpClient) { }

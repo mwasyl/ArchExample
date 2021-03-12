@@ -1,9 +1,11 @@
 <div class="trips-component">
-  <ul class="trips">
-    <li *ngFor="let trip of trips" >
-      <a routerLink="/detail/{{trip.id}}">
-        <span class="badge">{{trip.id}}</span> {{trip.destination}}
-      </a>
-    </li>
-  </ul>
+
+ <h4>Travels list</h4>
+
+  <div class="list-group">
+    <a *ngFor="let trip of trips" routerLink="/detail/{{trip.id}}" class="list-group-item list-group-item-action">
+      {{trip.destination}}
+    </a>
+  </div>
+
 </div>
